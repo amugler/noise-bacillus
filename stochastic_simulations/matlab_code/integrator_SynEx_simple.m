@@ -1,4 +1,5 @@
-%{ This code numerically integrates the differential equations for the SynEx strain (simple model).
+%{ 
+  This code numerically integrates the differential equations for the SynEx strain (simple model).
 %}
 
 function dz=integrator_SynEx_simple(~,z)
