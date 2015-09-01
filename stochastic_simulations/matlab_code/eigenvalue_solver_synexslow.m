@@ -1,4 +1,5 @@
-%{ This code determines the eigenvalues at the fixed points of the SynExSlow strain (simple model).
+%{ 
+  This code determines the eigenvalues at the fixed points of the SynExSlow strain (simple model).
 %}
 
 a_k = .3;
