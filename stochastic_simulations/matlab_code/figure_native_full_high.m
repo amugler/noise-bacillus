@@ -1,5 +1,5 @@
 %{ 
-    This code generates a figure of the time series data for the native full model (high molecule number).
+    This code generates a figure of the time series data and power spectra for the native full model (high molecule number).
 %}
 
 %plots
