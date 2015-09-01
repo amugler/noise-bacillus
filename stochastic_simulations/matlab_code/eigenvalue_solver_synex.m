@@ -1,4 +1,5 @@
-%{ This code determines the eigenvalues at the fixed points of the SynEx strain (simple model).
+%{ 
+    This code determines the eigenvalues at the fixed points of the SynEx strain (simple model).
 %}
 
 global a_k a_m b_k b_m rho mu h p   
