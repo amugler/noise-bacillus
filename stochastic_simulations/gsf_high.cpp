@@ -1,4 +1,4 @@
-/*  This c++ code generates time series data for a Gillespie simulation for the stochastic full model of the native
+/*  This c++ code generates time series data for a Gillespie simulation for the stochastic full model of the SynEx
     strain without adiabatic elimination of mRNA dynamics with parameters corresponding to high molecule numbers.
 */
 
