@@ -1,4 +1,5 @@
-%{ This code creates a function which is used to create a Gaussian fit of the periodograms generated in the other codes
+%{ 
+  This code creates a function which is used to create a Gaussian fit of the periodograms generated in the other codes
 %}
 
 function z = gaussian_fitter(x)
