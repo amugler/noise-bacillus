@@ -1,4 +1,5 @@
-%{ This code numerically integrates the differential equations for the SynExSlow strain (simple model).
+%{ 
+  This code numerically integrates the differential equations for the SynExSlow strain (simple model).
 %}
 
 function dz=integrator_SynExSlow(~,z)
