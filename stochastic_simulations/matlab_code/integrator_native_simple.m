@@ -1,4 +1,5 @@
-%{ This code numerically integrates the differential equations for the native strain (simple model).
+%{ 
+  This code numerically integrates the differential equations for the native strain (simple model).
 %}
 
 function dz=integrator_native_simple(~,z)
