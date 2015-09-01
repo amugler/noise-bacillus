@@ -1,5 +1,5 @@
 /*  This c++ code generates time series data for a Gillespie simulation for the stochastic model based off of the
-    deterministic equations with parameters corresponding to high molecule numbers.
+    deterministic equations of the native strain with parameters corresponding to high molecule numbers.
 */
 
 #include <iostream>
