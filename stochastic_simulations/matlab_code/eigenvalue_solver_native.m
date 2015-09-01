@@ -1,4 +1,5 @@
-%{ This code determines the eigenvalues at the fixed points of the native strain (simple model).
+%{ 
+    This code determines the eigenvalues at the fixed points of the native strain (simple model).
 %}
 
 global a_k a_s b_k b_s k_0 k_1 Delta_k Delta_s h p   
