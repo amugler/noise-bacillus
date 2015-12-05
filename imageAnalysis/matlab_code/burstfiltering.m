@@ -92,20 +92,32 @@ parser.addParamValue('ranges',[]);
 parser.addParamValue('mask',[]);
 parser.parse(varargin{:});
 I = parser.Results.image;
+if(isempty(I))
+    I = imread('cameraman.tif');
+    warning('burstfiltering:DemoMode', ...
+        'No image data was provided, demoing with cameraman.tif');
+end
 if(isempty(parser.Results.cc))
+    % Detecting edges
+    fprintf('1. Detecting edges, calculating connected components ...');
     CC = edgeDetect(I);
+    fprintf('Done !\n');
 else
+    disp('1. Got edges !');
     CC = parser.Results.cc;
 end
 orgLabels = labelmatrix(CC);
 if(isempty(parser.Results.rp))
+    fprintf('2. Calculating region properties ... ');
     RP = getRegionProps(I,CC);
+    fprintf('Done !\n');
 else
+    disp('2. Got region properties !');
     RP = parser.Results.rp;
 end
 
 labelColorMap = jet(CC.NumObjects);
-[s, idx] = sort(rand(1,CC.NumObjects));
+[~, idx] = sort(rand(1,CC.NumObjects));
 labelColorMap = labelColorMap(idx,:);
 labelColorMap = [ [0 0 0] ; labelColorMap ];
 
@@ -114,7 +126,11 @@ if(isempty(parser.Results.ranges))
 else
     handles.ranges = parser.Results.ranges;
 end
+fprintf('3. Sorting region properties ... ');
 handles.sorted = getSorted(RP);
+fprintf('Done !\n');
+
+fprintf('4. Preparing GUI ... ');
 
 handles.maskFilter = ones(1,CC.NumObjects);
 if(isempty(parser.Results.mask))
@@ -172,6 +188,7 @@ if(~isempty(parser.Results.ranges))
     updateSliders(handles);
 end
 
+fprintf('Done !\n');
 % UIWAIT makes burstfiltering wait for user response (see UIRESUME)
 uiwait(handles.figure1);
 
@@ -385,7 +402,7 @@ switch selected
         propimg = propmap(handles.burstLabels+1);
         imshow(propimg,[],'colormap',[[0 0 0];jet(255)]);
     case 'Histogram'
-        hist(double([burstrp.(name)]));
+        histogram(double([burstrp.(name)]));
 end
 
 % --- Executes during object creation, after setting all properties.
