@@ -1,57 +1,50 @@
-
-function rgb = makergb(r,g,b,normornot);
-% makergb Combine inputs into a red, green, and blue image
+function rgb = makergb(varargin)
+% Construct a rgb matrix where each color channel is normalized
 %
-% r - red channel contents
-% g - green channel contents
-% b - blue channel contents
-% normornot - normalize the data (default) or not
+% INPUT
+% r - red channel with dimensions Y by X
+% g - green channel with dimensions Y by X
+% b - blue channel with dimensions Y by X
+% ... additional channels
+% normalizeFlag - true if each channel should be normalized (default)
+%               - false otherwise
 %
-% Courtesy of Michael Elowitz, Caltech
+% OUTPUT
+% rgb a uint8 Y by X by N where N is at least 3 and corresponds with the
+% number of channels given in the input. Empty matrices are expanded to
+% zeros.
+%
+% See also mat2gray
+%
+% Mark Kittisopikul
 
-if nargin<2,
-	disp('Error: I need at least 2 images here!');
-	return;
-end;
-if nargin<4
-    normornot=1;
+    % size of the red channel
+    siz = size(varargin{1});
+    % number of channels
+    N = nargin;
+
+    % detect normalization flag, which should be a scalar as the last input
+    normalize = true;
+    if(isscalar(varargin{N}))
+        N = N-1;
+        normalize = logical(varargin{N});
+    end
+
+    % ensure that the number of channels is at least 3
+    [varargin{N+1:3}] = deal(zeros(siz));
+    N = 3;
+
+    % convert any empty channels to zeros
+    empty = cellfun('isempty',varargin(1:N));
+    [varargin{empty}] = deal(zeros(siz));
+
+    % normalize each channel
+    if(normalize)
+        varargin = cellfun(@mat2gray,varargin(1:N),'UniformOutput',false);
+    end
+
+    % assemble final matrix and convert to rgb
+    rgb = cat(3,varargin{1:N});
+    rgb = im2uint8(rgb);
+
 end
-
-if size(r,1) == 1,
-	% these must be filenames;
-	r = imread(r);
-	g = imread(g);
-	if nargin>=3,
-		b = imread(b);
-	end;
-end;
-
-if nargin==2,
-	b = r;
-	b(:) = 0;
-end;
-
-r = double(r(:,:,1,1));
-g = double(g(:,:,1,1));
-b = double(b(:,:,1,1));
-
-if normornot
-	rgb(:,:,1) = (r-minmin(r)) / (maxmax(r)-minmin(r));
-	rgb(:,:,2) = (g-minmin(g)) / (maxmax(g)-minmin(g));
-	if nargin>2
-        rgb(:,:,3) = (b-minmin(b)) / (maxmax(b)-minmin(b));
-	else
-        rgb(:,:,3) = zeros(size(r));
-	end
-else
-	rgb(:,:,1) = (r);%-minmin(r)) / (maxmax(r)-minmin(r));
-	rgb(:,:,2) = (g);%-minmin(g)) / (maxmax(g)-minmin(g));
-	if nargin>2
-        rgb(:,:,3) = (b);%-minmin(b)) / (maxmax(b)-minmin(b));
-	else
-        rgb(:,:,3) = zeros(size(r));
-	end
-end    
-
-rgb(isnan(rgb)) = 0;
-rgb = uint8(rgb * 255);

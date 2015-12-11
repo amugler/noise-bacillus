@@ -1,5 +1,4 @@
 Copyright Mark Kittisopikul 2010 - 2015
-Portions courtesy of Michael Elowitz, California Institute of Technology
 
 All Rights Reserved.
 
